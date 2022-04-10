@@ -1,4 +1,4 @@
-__all__ = ('get_vehicle',)
+__all__ = ('VehicleView',)
 
 
-from .vehicle import get_vehicle
+from .vehicle import VehicleView

@@ -1,7 +1,7 @@
 from typing import Any
 
 from aiohttp import web
-from api.application import get_application
+from api.main import get_application
 
 
 def init_app(argv: Any = None) -> web.Application:

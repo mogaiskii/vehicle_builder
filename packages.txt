@@ -1,1 +1,5 @@
 aiohttp==3.8.1
+sqlalchemy[asyncio]==1.4.35
+alembic[tz]==1.7.7
+aiohttp_pydantic==1.12.1
+asyncpg==0.25.0

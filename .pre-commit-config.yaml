@@ -8,24 +8,22 @@ repos:
     -   id: check-added-large-files
 -   repo: local
     hooks:
-    -   id: isort
-        name: isort
-        entry: isort app
-        language: system
-        types: [python]
     -   id: mypy
         name: mypy
-        entry: mypy
+        entry: mypy --config-file mypy.ini
+        exclude: migrations/
         language: system
         types: [python]
     -   id: pytest
         name: pytest
         pass_filenames: false
         entry: pytest
+        exclude: migrations/
         language: system
         types: [python]
     -   id: flake8
         name: flake8
         entry: flake8 app
+        exclude: migrations/
         language: system
         types: [python]
