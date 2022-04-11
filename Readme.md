@@ -1,5 +1,12 @@
 # Vehicle builder
 
+## Launch
+
+- set .env
+  - db_url
+- build docker image: `docker build -t vehicle_builder`
+- run docker container: `docker run -p 8000:8000 --name vehicle_builder --env_file.env vehicle_builder`
+
 ## Development
 
 - `pip install -r packages.dev.txt`
