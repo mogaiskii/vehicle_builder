@@ -7,4 +7,4 @@ RUN pip install -r ./packages.txt
 
 COPY ./app .
 
-CMD python -m aiohttp.web -H localhost -P 8000 main:init_app
+CMD python -m aiohttp.web -H 0.0.0.0 -P 8000 main:init_app
