@@ -6,4 +6,8 @@ from sqlalchemy.ext.asyncio import AsyncSession
 class VehicleService:
     @classmethod
     async def get_vehicle(cls, session: AsyncSession, vehicle_id: int) -> Vehicle:
+        """
+        get vehicle with related entities
+        :raises NotFound
+        """
         return await get_vehicle(session, vehicle_id)

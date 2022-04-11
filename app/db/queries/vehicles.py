@@ -13,6 +13,10 @@ from db.queries.exceptions import NotFound
 
 
 async def get_vehicle(session: AsyncSession, vehicle_id: int) -> Vehicle:
+    """
+    get vehicle with related entities
+    :raises NotFound
+    """
     try:
         statement = select(Vehicle).where(Vehicle.id == vehicle_id).options(
                 joinedload(

@@ -11,10 +11,10 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from api.application import ApplicationHelper
 from api.hooks import on_startup
 from api.main import get_application
-from db.models import Base, Vehicle, Component, Group, Feature, Function, FunctionComponent, VehicleFeatures, \
-    VehicleFunctions, VehicleComponents, VehicleFunctionComponents
+from db.models import Base, Vehicle
 from db.queries.vehicles import get_vehicle
 from settings import Settings
+from tests.utils import build_vehicle
 
 
 @pytest.fixture
@@ -60,45 +60,7 @@ def session(app: Application) -> AsyncSession:
 def vehicle_generator(session: AsyncSession) -> Callable[[], Coroutine[Any, Any, Vehicle]]:
     async def generator() -> Vehicle:
         async with session:
-            component = Component(name='component', cad_model_url='url')
-            session.add(component)
-
-            group = Group(name='group')
-            session.add(group)
-            await session.flush()
-
-            feature = Feature(name='feature', group_id=group.id)
-            session.add(feature)
-            await session.flush()
-
-            function = Function(name='function', feature_id=feature.id)
-            session.add(function)
-            await session.flush()
-
-            function_component = FunctionComponent(function_id=function.id, component_id=component.id)
-            session.add(function_component)
-
-            vehicle = Vehicle(name='vehicle')
-            session.add(vehicle)
-            await session.flush()
-
-            vehicle_feature = VehicleFeatures(vehicle_id=vehicle.id, feature_id=feature.id)
-            session.add(vehicle_feature)
-            await session.flush()
-
-            vehicle_function = VehicleFunctions(function_id=function.id, vehicle_feature_id=vehicle_feature.id)
-            session.add(vehicle_function)
-            await session.flush()
-
-            vehicle_component = VehicleComponents(vehicle_id=vehicle.id, component_id=component.id, component_amount=5)
-            session.add(vehicle_component)
-            await session.flush()
-
-            vehicle_function_component = VehicleFunctionComponents(
-                vehicle_function_id=vehicle_function.id,
-                vehicle_component_id=vehicle_component.id
-            )
-            session.add(vehicle_function_component)
+            vehicle = await build_vehicle(session)
 
             await session.commit()
 
