@@ -15,7 +15,11 @@ class VehicleFeatures(BaseModel):
     feature_id = Column(Integer, ForeignKey('features.id'), nullable=False)
     feature: Feature = relation(Feature, uselist=False)
 
-    vehicle_functions: List[VehicleFunctions] = relation('VehicleFunctions')
+    vehicle_functions: List[VehicleFunctions] = relation(
+        'VehicleFunctions',
+        uselist=True,
+        order_by='VehicleFunctions.id'
+    )
 
 
 class VehicleFunctions(BaseModel):
@@ -27,7 +31,9 @@ class VehicleFunctions(BaseModel):
 
     vehicle_components: List[VehicleComponents] = relation(
         'VehicleComponents',
-        secondary='vehicle_function_components'
+        secondary='vehicle_function_components',
+        uselist=True,
+        order_by='VehicleComponents.id'
     )
 
 
@@ -53,4 +59,8 @@ class Vehicle(BaseModel):
     name = Column(String(128), nullable=False)
     meta_data = Column(JSON)
 
-    vehicle_features: List[VehicleFeatures] = relation(VehicleFeatures, uselist=True)
+    vehicle_features: List[VehicleFeatures] = relation(
+        VehicleFeatures,
+        uselist=True,
+        order_by='VehicleFeatures.id'
+    )

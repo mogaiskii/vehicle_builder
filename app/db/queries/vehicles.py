@@ -22,22 +22,24 @@ async def get_vehicle(session: AsyncSession, vehicle_id: int) -> Vehicle:
                 ),
                 joinedload(
                     Vehicle.vehicle_features
-                ).
-                joinedload(
+                ).joinedload(
                     VehicleFeatures.vehicle_functions
                 ).joinedload(
                     VehicleFunctions.function
                 ),
                 joinedload(
                     Vehicle.vehicle_features
-                ).
-                joinedload(
+                ).joinedload(
                     VehicleFeatures.vehicle_functions
-                ).
-                joinedload(VehicleFunctions.vehicle_components).joinedload(VehicleComponents.component)
+                ).joinedload(
+                    VehicleFunctions.vehicle_components
+                ).joinedload(
+                    VehicleComponents.component
+                )
         )
+
         request = await session.execute(statement)
-        result = request.scalar_one()
+        result = request.unique().scalar_one()
         return result
 
     except NoResultFound as e:
